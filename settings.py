@@ -1,3 +1,4 @@
+from pathlib import Path
 class Settings:
     """A class to store all settings for Alien Invasion"""
 
@@ -9,7 +10,7 @@ class Settings:
         self.screen_height = 800
         self.bg_color = (230, 230, 230)
         
-        #Ship settings
+        # Ship settings
         self.ship_speed = 5
         self.ship_limit = 3
         self.ship_w = 60
@@ -29,6 +30,16 @@ class Settings:
         self.alien_w = 70
         self.alien_h = 70
         
-        # fleet_direction of 1 represents right; -1 represents left.
+        # Fleet_direction of 1 represents right; -1 represents left.
         self.fleet_direction = 1
         
+        # Button settings
+        self.button_w = 200
+        self.button_h = 50
+        self.button_color = (86, 164, 152)
+        
+        # Font settings
+        self.text_color = (5, 5, 5)
+        self.button_font_size = 48
+        self.HUD_font_size = 20
+        self.font_file = Path.cwd() / 'Assets' /  'Fonts' / 'BREAK_IT.ttf'

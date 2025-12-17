@@ -26,7 +26,7 @@ class GameStats:
             self.hi_score = 0
             self.save_scores()
             
-    def save_score(self):
+    def save_scores(self):
         scores = {
             'hi_score': self.hi_score
         }

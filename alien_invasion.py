@@ -9,7 +9,7 @@ from alien import Alien
 from alien_fleet import AlienFleet
 from time import sleep
 from button import Button
-
+from hud import HUD
 
 class AlienInvasion:
     """Overall class to manage game and behavior"""
@@ -23,12 +23,14 @@ class AlienInvasion:
         self.clock = pygame.time.Clock()
         self.settings = Settings()
         self.settings.initialize_dynamic_settings()
-        self.game_stats = GameStats(self)
         
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
+        
+        self.game_stats = GameStats(self)
+        self.HUD = HUD(self)
         
         self.ship = Ship(self, Arsenal(self))
         self.alien_fleet = AlienFleet(self)
@@ -61,6 +63,7 @@ class AlienInvasion:
             self._reset_level()
             self.settings.increase_difficulty
             self.game_stats.update_level
+            self.HUD.update_scores()
         
     def _check_game_status(self):
         if self.game_stats.ships_left > 0:
@@ -80,6 +83,7 @@ class AlienInvasion:
         self.settings.initialize_dynamic_settings()
         self.game_stats.reset_stats()
         self._reset_level()
+        self.HUD.update_scores()
         self.ship._center_ship()
         self.game_active = True
         pygame.mouse.set_visible(False)
@@ -88,7 +92,8 @@ class AlienInvasion:
         """Respond to kepresses and mouse events"""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit()
+                self.running = False
+                self.game_stats.save_scores()
             elif event.type == pygame.KEYDOWN and self.game_active == True:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
@@ -107,10 +112,14 @@ class AlienInvasion:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
-        elif event.key == pygame.K_q:
-            sys.exit()
         elif event.key == pygame.K_SPACE:
             self.ship.fire()
+        elif event.key == pygame.K_q:
+            self.running = False
+            self.game_stats.save_scores()
+            pygame.quit()
+            sys.exit()
+
 
     def _check_keyup_events(self, event):
         """Respond to key releases."""
@@ -124,6 +133,7 @@ class AlienInvasion:
         self.screen.fill(self.settings.bg_color)
         self.ship.draw()
         self.alien_fleet.draw()
+        self.HUD.draw()
         
         if not self.game_active:
             self.play_button.draw()

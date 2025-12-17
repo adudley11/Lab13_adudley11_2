@@ -59,11 +59,15 @@ class AlienInvasion:
             
         collisions = self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)
         
+        if collisions:
+            self.game_stats.update(collisions)
+            self.HUD.update_scores()
+    
         if self.alien_fleet.check_destroyed_status():
             self._reset_level()
-            self.settings.increase_difficulty
-            self.game_stats.update_level
-            self.HUD.update_scores()
+            self.settings.increase_difficulty()
+            self.game_stats.update_level()
+            self.HUD._update_level()
         
     def _check_game_status(self):
         if self.game_stats.ships_left > 0:

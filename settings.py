@@ -10,6 +10,7 @@ class Settings:
         self.screen_height = 800
         self.bg_color = (230, 230, 230)
         self.difficulty_scale = 1.5
+        self.scores_file = Path.cwd() / 'files' / 'scores.json'
         
         # Ship settings
         self.ship_limit = 3

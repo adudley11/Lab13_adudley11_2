@@ -13,12 +13,13 @@ class Settings:
         self.scores_file = Path.cwd() / 'files' / 'scores.json'
         
         # Ship settings
+        self.ship_file = Path.cwd() / 'images' / 'ship.bmp'
         self.ship_limit = 3
         self.ship_w = 60
         self.ship_h = 60
         
         # Bullet settings
-        self.bullet_width = 30000
+        self.bullet_width = 6
         self.bullet_height = 30
         self.bullet_color = (143, 26, 7)
         
@@ -55,6 +56,6 @@ class Settings:
         self.bullets_allowed = 5
 
     def increase_difficulty(self):
-        self.ship_speed *= self.dificulty_scale
+        self.ship_speed *= self.difficulty_scale
         self.bullet_speed *= self.difficulty_scale
         self.alien_speed *= self.difficulty_scale

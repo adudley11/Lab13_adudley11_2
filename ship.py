@@ -15,11 +15,9 @@ class Ship:
         self.screen_rect = game.screen.get_rect()
  
         # Load the ship image and get its rect
-        self.image = pygame.image.load('images/ship.bmp')
-        self.image = pygame.transform.scale(self.image, 
-            (self.settings.ship_w, self.settings.ship_h)
-            )
-                
+        self.image = pygame.image.load(self.settings.ship_file)
+        self.image = pygame.transform.scale(self.image, (self.settings.ship_w, self.settings.ship_h))
+
         self.rect = self.image.get_rect()
         
         self._center_ship()
@@ -55,6 +53,7 @@ class Ship:
         """Draw the ship at its current location"""
         self.arsenal.draw()
         self.screen.blit(self.image, self.rect)
+
         
     def fire(self):
         self.arsenal.fire_bullet()
